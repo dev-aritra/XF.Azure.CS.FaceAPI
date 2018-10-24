@@ -1,6 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using XF.Azure.CS.FaceAPI.View;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace XF.Azure.CS.FaceAPI
@@ -11,7 +12,7 @@ namespace XF.Azure.CS.FaceAPI
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new NavigationPage( new LandingPage());
         }
 
         protected override void OnStart()
