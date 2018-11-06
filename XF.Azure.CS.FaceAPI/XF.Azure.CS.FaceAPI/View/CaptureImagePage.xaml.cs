@@ -23,7 +23,9 @@ namespace XF.Azure.CS.FaceAPI.View
         private FaceClient faceClient;
         private FaceOperations faceOperations;
         private string lastResult;
-        private FaceRectangle faceRectangle;
+
+        private List<FaceRectangle> faceRectangles;
+        private SKBitmap Image;
 
         public CaptureImagePage()
         {
@@ -33,6 +35,7 @@ namespace XF.Azure.CS.FaceAPI.View
 
         private async void InitOperation()
         {
+            faceRectangles= new List<FaceRectangle>();
             InitializeFaceClient();
             await CrossMedia.Current.Initialize();
             TakePictureAndAnalizeImage();
@@ -70,14 +73,15 @@ namespace XF.Azure.CS.FaceAPI.View
 
         private async Task<MediaFile> TakePicture()
         {
+            Image = null;
             MediaFile image = null;     
             if (CrossMedia.Current.IsCameraAvailable && CrossMedia.Current.IsTakePhotoSupported)
             {
 
                 image = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
                 {
-                    
-                    RotateImage = false,
+                    PhotoSize=PhotoSize.Medium,
+                    RotateImage = true,
                     DefaultCamera = Plugin.Media.Abstractions.CameraDevice.Front,
                     Directory = "FaceAPI",
                     Name = "face.jpg"
@@ -93,9 +97,8 @@ namespace XF.Azure.CS.FaceAPI.View
 
         private void SetImageInImageView(MediaFile image)
         {
-            capturedImage.Source = ImageSource.FromStream(() => {
-                return image.GetStream();
-            });
+            Image= SKBitmap.Decode(image.GetStreamWithImageRotatedForExternalStorage());
+            capturedImage.InvalidateSurface();
         }
 
         private async Task<List<Emotion>> GetFaces(MediaFile image)
@@ -106,6 +109,14 @@ namespace XF.Azure.CS.FaceAPI.View
                 
                 var faceApiResponseList = await faceClient.Face.DetectWithStreamAsync(image.GetStream(), returnFaceAttributes: new List<FaceAttributeType> { { FaceAttributeType.Emotion } });
                 faces = faceApiResponseList.Select(x => x.FaceAttributes.Emotion).ToList();
+                if(faceRectangles.Count>0)
+                {
+                    faceRectangles.Clear();
+                }
+                foreach(var face in faceApiResponseList)
+                {
+                    faceRectangles.Add(face.FaceRectangle);
+                }
                 
             }
             catch(Exception ex)
@@ -147,14 +158,19 @@ namespace XF.Azure.CS.FaceAPI.View
         private async void TakePictureAndAnalizeImage()
         {
             ResetResultLabel();
-            var capturedImage = await TakePicture();
-            if (capturedImage != null)
+            var capturedImg = await TakePicture();
+            if (capturedImg != null)
             {
                 ShowProgressDialog();
-                SetImageInImageView(capturedImage);
-                var emotions = await GetFaces(capturedImage);
-                var detectedEmotion = FindDetectedEmotion(emotions);
-                result.Text += detectedEmotion;
+                SetImageInImageView(capturedImg);
+                var emotions = await GetFaces(capturedImg);
+                if(emotions.Count>0)
+                {
+                    capturedImage.InvalidateSurface();
+                    var detectedEmotion = FindDetectedEmotion(emotions);
+                    result.Text += detectedEmotion;
+                }
+                
                 HideProgressDialog();
             }
         }
@@ -170,11 +186,99 @@ namespace XF.Azure.CS.FaceAPI.View
             UserDialogs.Instance.HideLoading();
         }
 
-        
+        private void CapturedImage_PaintSurface(object sender, SkiaSharp.Views.Forms.SKPaintSurfaceEventArgs args)
+        {
+            var info = args.Info;
+            var canvas = args.Surface.Canvas;
+            ClearCanvas(info,canvas);
+            if (Image != null)
+            {
+                var scale = Math.Min((float)info.Width / (float)Image.Width, (float)info.Height / (float)Image.Height);
 
-  
+                var scaleHeight = scale * Image.Height;
+                var scaleWidth = scale * Image.Width;
 
+                var top = (info.Height - scaleHeight) / 2;
+                var left = (info.Width - scaleWidth) / 2;
 
+                canvas.DrawBitmap(Image, new SKRect(left, top, left + scaleWidth, top + scaleHeight));
 
+                if(faceRectangles.Count>0)
+                {
+                    foreach(var face in faceRectangles)
+                    {
+                        LabelPrediction(canvas, face, left, top , scale);
+                    }
+                    
+                }
+            }
+        }
+
+       
+
+        static void LabelPrediction(SKCanvas canvas, FaceRectangle box, float left, float top, float scale, bool addBox = true)
+        {
+            var scaledBoxLeft = left + (scale * (float)box.Left);
+            var scaledBoxWidth = scale * (float)box.Width;
+            var scaledBoxTop = top + (scale * (float)box.Top);
+            var scaledBoxHeight = scale * (float)box.Height;
+
+            if (addBox)
+                DrawBox(canvas, scaledBoxLeft, scaledBoxTop, scaledBoxWidth, scaledBoxHeight);
+
+            
+        }
+
+        static void DrawBox(SKCanvas canvas, SKPaint paint, float startLeft, float startTop, float scaledBoxWidth, float scaledBoxHeight)
+        {
+            var path = CreateBoxPath(startLeft, startTop, scaledBoxWidth, scaledBoxHeight);
+            canvas.DrawPath(path, paint);
+        }
+
+        static SKPath CreateBoxPath(float startLeft, float startTop, float scaledBoxWidth, float scaledBoxHeight)
+        {
+            var path = new SKPath();
+            path.MoveTo(startLeft, startTop);
+
+            path.LineTo(startLeft + scaledBoxWidth, startTop);
+            path.LineTo(startLeft + scaledBoxWidth, startTop + scaledBoxHeight);
+            path.LineTo(startLeft, startTop + scaledBoxHeight);
+            path.LineTo(startLeft, startTop);
+
+            return path;
+        }
+        static void DrawBox(SKCanvas canvas, float startLeft, float startTop, float scaledBoxWidth, float scaledBoxHeight)
+        {
+            var strokePaint = new SKPaint
+            {
+                IsAntialias = true,
+                Style = SKPaintStyle.Stroke,
+                Color = SKColors.White,
+                StrokeWidth = 5,
+                PathEffect = SKPathEffect.CreateDash(new[] { 20f, 20f }, 20f)
+            };
+            DrawBox(canvas, strokePaint, startLeft, startTop, scaledBoxWidth, scaledBoxHeight);
+
+            var blurStrokePaint = new SKPaint
+            {
+                Style = SKPaintStyle.Stroke,
+                StrokeWidth = 5,
+                PathEffect = SKPathEffect.CreateDash(new[] { 20f, 20f }, 20f),
+                IsAntialias = true,
+                MaskFilter = SKMaskFilter.CreateBlur(SKBlurStyle.Normal, 0.57735f * 1.0f + 0.5f)
+            };
+            DrawBox(canvas, blurStrokePaint, startLeft, startTop, scaledBoxWidth, scaledBoxHeight);
+        }
+
+        static void ClearCanvas(SKImageInfo info, SKCanvas canvas)
+        {
+            var paint = new SKPaint
+            {
+                Style = SKPaintStyle.Fill,
+                Color = SKColors.White
+            };
+
+            canvas.DrawRect(info.Rect, paint);
+        }
     }
 }
