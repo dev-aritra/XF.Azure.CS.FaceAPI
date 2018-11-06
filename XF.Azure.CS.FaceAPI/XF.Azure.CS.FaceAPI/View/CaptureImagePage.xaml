@@ -1,14 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="XF.Azure.CS.FaceAPI.View.CaptureImagePage"
-             Title="Capture Image">
+<ContentPage
+    x:Class="XF.Azure.CS.FaceAPI.View.CaptureImagePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:forms="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+    Title="Capture Image">
+    <NavigationPage.TitleView>
+
+        <Button
+            Clicked="OnClickTapped"
+            HorizontalOptions="Center"
+            Text="Click" />
+
+
+    </NavigationPage.TitleView>
     <ContentPage.Content>
-        <Image
-            x:Name="capturedImage"
-            HorizontalOptions="FillAndExpand"
-            VerticalOptions="FillAndExpand">
-            
-        </Image>
+
+        <forms:SKCanvasView x:Name="capturedImage" PaintSurface="CapturedImage_PaintSurface" />
     </ContentPage.Content>
 </ContentPage>
