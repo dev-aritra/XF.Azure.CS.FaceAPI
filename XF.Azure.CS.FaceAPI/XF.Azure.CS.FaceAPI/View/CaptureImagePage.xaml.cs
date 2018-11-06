@@ -105,8 +105,6 @@ namespace XF.Azure.CS.FaceAPI.View
             {
                 
                 var faceApiResponseList = await faceClient.Face.DetectWithStreamAsync(image.GetStream(), returnFaceAttributes: new List<FaceAttributeType> { { FaceAttributeType.Emotion } });
-                //faceRectangle = faceApiResponseList[0].FaceRectangle;
-                //SkCanvasView.InvalidateSurface();
                 faces = faceApiResponseList.Select(x => x.FaceAttributes.Emotion).ToList();
                 
             }
@@ -174,53 +172,7 @@ namespace XF.Azure.CS.FaceAPI.View
 
         
 
-        private void SkCanvasView_PaintSurface(object sender, SkiaSharp.Views.Forms.SKPaintSurfaceEventArgs e)
-        {
-            SKImageInfo skImageInfo = e.Info;
-            SKSurface skSurface = e.Surface;
-            SKCanvas skCanvas = skSurface.Canvas;
-
-            skCanvas.Clear(SKColors.Transparent);
-
-            var skCanvasWidth = skImageInfo.Width;
-            var skCanvasheight = skImageInfo.Height;
-
-            // move canvas X,Y to center of screen
-            skCanvas.Translate((float)skCanvasWidth / 2, (float)skCanvasheight / 2);
-            // set the pixel scale of the canvas
-            skCanvas.Scale(skCanvasWidth / 200f);
-            
-            Draw_Rectangle(skCanvas);
-        }
-
-
-        private void Draw_Rectangle(SKCanvas skCanvas)
-        {
-            try
-            {
-                SKPaint skPaint = new SKPaint()
-                {
-                    Style = SKPaintStyle.Stroke,
-                    Color = SKColors.DeepPink,
-                    StrokeWidth = 10,
-                    IsAntialias = true,
-                };
-
-                SKRect skRectangle = new SKRect();
-                skRectangle.Size = new SKSize(faceRectangle.Width, faceRectangle.Height);
-                skRectangle.Location = new SKPoint(-100f / 2, -100f / 2);
-
-                skCanvas.DrawRect(skRectangle, skPaint);
-            }
-            catch(Exception ex)
-            {
-
-            }
-            // Draw Rectangle
-            
-        }
-
-
+  
 
 
 

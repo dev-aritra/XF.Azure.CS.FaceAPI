@@ -25,22 +25,14 @@
     </NavigationPage.TitleView>
     <ContentPage.Content>
         <StackLayout>
-            <Grid>
-                <Image
+            <Image
                     Grid.Row="0"
             x:Name="capturedImage"
                     
             HorizontalOptions="CenterAndExpand"
             VerticalOptions="Center">
-                </Image>
-                <forms:SKCanvasView
-                     HorizontalOptions="CenterAndExpand"
-            VerticalOptions="Center"
-                    PaintSurface="SkCanvasView_PaintSurface"
-                    Grid.Row="0"
-            x:Name="SkCanvasView" />
-            </Grid>
-            
+            </Image>
+
             <Label
                 x:Name="result"
                 VerticalOptions="End"
