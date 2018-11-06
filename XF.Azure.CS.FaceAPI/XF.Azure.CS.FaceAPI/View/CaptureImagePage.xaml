@@ -1,44 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="XF.Azure.CS.FaceAPI.View.CaptureImagePage"
-             xmlns:forms="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
-             Title="Capture Image">
+<ContentPage
+    x:Class="XF.Azure.CS.FaceAPI.View.CaptureImagePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:forms="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+    Title="Capture Image">
     <NavigationPage.TitleView>
-        
-        <StackLayout
-            HorizontalOptions="FillAndExpand"
-            Orientation="Horizontal">
-            <Button
-                HorizontalOptions="Center"
-            Text="Click"
+
+        <Button
             Clicked="OnClickTapped"
-            />
-            <Button
-            Text="Details"
-            
-            HorizontalOptions="End"
-            Clicked="OnDetailsTapped"
-            />
-        </StackLayout>
-        
+            HorizontalOptions="Center"
+            Text="Click" />
+
+
     </NavigationPage.TitleView>
     <ContentPage.Content>
-        <StackLayout>
-            <Image
-                    Grid.Row="0"
-            x:Name="capturedImage"
-                    
-            HorizontalOptions="CenterAndExpand"
-            VerticalOptions="Center">
-            </Image>
 
-            <Label
-                x:Name="result"
-                VerticalOptions="End"
-                HorizontalOptions="CenterAndExpand">
-            </Label>
-        </StackLayout>
-
+        <forms:SKCanvasView x:Name="capturedImage" PaintSurface="CapturedImage_PaintSurface" />
     </ContentPage.Content>
 </ContentPage>
