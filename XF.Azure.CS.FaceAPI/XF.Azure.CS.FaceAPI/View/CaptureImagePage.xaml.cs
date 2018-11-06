@@ -253,7 +253,7 @@ namespace XF.Azure.CS.FaceAPI.View
             {
                 IsAntialias = true,
                 Style = SKPaintStyle.Stroke,
-                Color = SKColors.White,
+                Color = SKColors.Red,
                 StrokeWidth = 5,
                 PathEffect = SKPathEffect.CreateDash(new[] { 20f, 20f }, 20f)
             };
@@ -261,6 +261,7 @@ namespace XF.Azure.CS.FaceAPI.View
 
             var blurStrokePaint = new SKPaint
             {
+                Color = SKColors.Red,
                 Style = SKPaintStyle.Stroke,
                 StrokeWidth = 5,
                 PathEffect = SKPathEffect.CreateDash(new[] { 20f, 20f }, 20f),
