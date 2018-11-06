@@ -7,31 +7,15 @@
     Title="Capture Image">
     <NavigationPage.TitleView>
 
-        <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
-            <Button
-                Clicked="OnClickTapped"
-                HorizontalOptions="Center"
-                Text="Click" />
-            <Button
-                Clicked="OnDetailsTapped"
-                HorizontalOptions="End"
-                Text="Details" />
-        </StackLayout>
+        <Button
+            Clicked="OnClickTapped"
+            HorizontalOptions="Center"
+            Text="Click" />
+
 
     </NavigationPage.TitleView>
     <ContentPage.Content>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <forms:SKCanvasView x:Name="capturedImage" PaintSurface="CapturedImage_PaintSurface" />
 
-            <Label
-                x:Name="result"
-                HorizontalOptions="CenterAndExpand"
-                VerticalOptions="End" />
-        </Grid>
-
+        <forms:SKCanvasView x:Name="capturedImage" PaintSurface="CapturedImage_PaintSurface" />
     </ContentPage.Content>
 </ContentPage>
