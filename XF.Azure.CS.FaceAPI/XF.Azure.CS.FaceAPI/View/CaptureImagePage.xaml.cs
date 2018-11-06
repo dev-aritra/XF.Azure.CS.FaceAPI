@@ -246,13 +246,13 @@ namespace XF.Azure.CS.FaceAPI.View
             var text = tag;
 
             var textWidth = textPaint.MeasureText(text);
-            textPaint.TextSize = 0.9f * scaledBoxWidth * textPaint.TextSize / textWidth;
+            textPaint.TextSize = 0.5f * scaledBoxWidth * textPaint.TextSize / textWidth;
 
             var textBounds = new SKRect();
             textPaint.MeasureText(text, ref textBounds);
 
-            var xText = (startLeft + (scaledBoxWidth / 2)) - textBounds.MidX;
-            var yText = (startTop + (scaledBoxHeight / 2)) + textBounds.MidY;
+            var xText = startLeft;
+            var yText = startTop + scaledBoxHeight;
 
             var paint = new SKPaint
             {
