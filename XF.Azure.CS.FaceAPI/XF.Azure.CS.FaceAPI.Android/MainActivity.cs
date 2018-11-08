@@ -7,6 +7,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Plugin.CurrentActivity;
+using Acr.UserDialogs;
 
 namespace XF.Azure.CS.FaceAPI.Droid
 {
@@ -21,6 +22,7 @@ namespace XF.Azure.CS.FaceAPI.Droid
             base.OnCreate(savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             CrossCurrentActivity.Current.Init(this, savedInstanceState);
+            UserDialogs.Init(this);
             LoadApplication(new App());
         }
 
