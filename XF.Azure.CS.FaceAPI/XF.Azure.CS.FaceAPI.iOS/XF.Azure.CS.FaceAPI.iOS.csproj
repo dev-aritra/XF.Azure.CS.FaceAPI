@@ -169,13 +169,4 @@
       <Name>XF.Azure.CS.FaceAPI</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\bg.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\bg%402x.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\bg%403x.jpg" />
-  </ItemGroup>
 </Project>

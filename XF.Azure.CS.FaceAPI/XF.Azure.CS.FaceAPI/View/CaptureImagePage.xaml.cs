@@ -6,7 +6,6 @@ using Plugin.Media.Abstractions;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -39,11 +38,8 @@ namespace XF.Azure.CS.FaceAPI.View
             TakePictureAndAnalizeImage();
         }
 
-
-
         private string FindDetectedEmotion(Emotion emotion)
         {
-            
             double max = 0;
             PropertyInfo prop = null;
             try
@@ -51,9 +47,8 @@ namespace XF.Azure.CS.FaceAPI.View
                 var emotionsValues = typeof(Emotion).GetProperties();
                 foreach (var property in emotionsValues)
                 {
-
                     var val = (double)property.GetValue(emotion);
-                    
+
                     if (val > max)
                     {
                         max = val;
@@ -63,7 +58,6 @@ namespace XF.Azure.CS.FaceAPI.View
             }
             catch (Exception ex)
             {
-
             }
 
             return prop.Name.ToString();
@@ -75,7 +69,6 @@ namespace XF.Azure.CS.FaceAPI.View
             MediaFile image = null;
             if (CrossMedia.Current.IsCameraAvailable && CrossMedia.Current.IsTakePhotoSupported)
             {
-
                 image = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
                 {
                     PhotoSize = PhotoSize.Medium,
@@ -90,7 +83,6 @@ namespace XF.Azure.CS.FaceAPI.View
                 await DisplayAlert("No Camera", ":( No camera available.", "OK");
             }
             return image;
-
         }
 
         private void SetImageInImageView(MediaFile image)
@@ -104,7 +96,6 @@ namespace XF.Azure.CS.FaceAPI.View
             bool facesFound = false;
             try
             {
-
                 var faceApiResponseList = await faceClient.Face.DetectWithStreamAsync(image.GetStream(), returnFaceAttributes: new List<FaceAttributeType> { { FaceAttributeType.Emotion } });
                 if (detectedFaces.Count > 0)
                 {
@@ -112,7 +103,7 @@ namespace XF.Azure.CS.FaceAPI.View
                 }
 
                 DetectedFaceExtended decFace = null;
-                if(faceApiResponseList.Count>0)
+                if (faceApiResponseList.Count > 0)
                 {
                     facesFound = true;
                     foreach (var face in faceApiResponseList)
@@ -120,26 +111,19 @@ namespace XF.Azure.CS.FaceAPI.View
                         decFace = new DetectedFaceExtended
                         {
                             FaceRectangle = face.FaceRectangle,
-
                         };
                         decFace.PredominantEmotion = FindDetectedEmotion(face.FaceAttributes.Emotion);
                         detectedFaces.Add(decFace);
                     }
                 }
-   
             }
             catch (Exception ex)
             {
                 HideProgressDialog();
                 UserDialogs.Instance.Toast("Could not detect any face");
-                
             }
             return facesFound;
         }
-
-
-
-
 
         private void InitializeFaceClient()
         {
@@ -151,18 +135,11 @@ namespace XF.Azure.CS.FaceAPI.View
 
         private void OnClickTapped(object sender, EventArgs e)
         {
-
             TakePictureAndAnalizeImage();
-
         }
-        
-
-
-        
 
         private async void TakePictureAndAnalizeImage()
         {
-            
             var capturedImg = await TakePicture();
             if (capturedImg != null)
             {
@@ -180,12 +157,11 @@ namespace XF.Azure.CS.FaceAPI.View
 
         private void ShowProgressDialog()
         {
-
             UserDialogs.Instance.ShowLoading("Analysing", MaskType.Black);
         }
+
         private void HideProgressDialog()
         {
-
             UserDialogs.Instance.HideLoading();
         }
 
@@ -210,30 +186,24 @@ namespace XF.Azure.CS.FaceAPI.View
                 {
                     foreach (var face in detectedFaces)
                     {
-                        LabelPrediction(canvas, face.FaceRectangle, left, top, scale , face.PredominantEmotion);
-
+                        LabelPrediction(canvas, face.FaceRectangle, left, top, scale, face.PredominantEmotion);
                     }
-
                 }
             }
         }
 
-
-
-        static void LabelPrediction(SKCanvas canvas, FaceRectangle box, float left, float top, float scale, string emotion)
+        private static void LabelPrediction(SKCanvas canvas, FaceRectangle box, float left, float top, float scale, string emotion)
         {
             var scaledBoxLeft = left + (scale * box.Left);
             var scaledBoxWidth = scale * box.Width;
             var scaledBoxTop = top + (scale * box.Top);
             var scaledBoxHeight = scale * box.Height;
 
-
             DrawBox(canvas, scaledBoxLeft, scaledBoxTop, scaledBoxWidth, scaledBoxHeight);
             DrawText(canvas, emotion, scaledBoxLeft, scaledBoxTop, scaledBoxWidth, scaledBoxHeight);
-
         }
 
-        static void DrawText(SKCanvas canvas, string tag, float startLeft, float startTop, float scaledBoxWidth, float scaledBoxHeight)
+        private static void DrawText(SKCanvas canvas, string tag, float startLeft, float startTop, float scaledBoxWidth, float scaledBoxHeight)
         {
             var textPaint = new SKPaint
             {
@@ -272,13 +242,13 @@ namespace XF.Azure.CS.FaceAPI.View
                             textPaint);
         }
 
-        static void DrawBox(SKCanvas canvas, SKPaint paint, float startLeft, float startTop, float scaledBoxWidth, float scaledBoxHeight)
+        private static void DrawBox(SKCanvas canvas, SKPaint paint, float startLeft, float startTop, float scaledBoxWidth, float scaledBoxHeight)
         {
             var path = CreateBoxPath(startLeft, startTop, scaledBoxWidth, scaledBoxHeight);
             canvas.DrawPath(path, paint);
         }
 
-        static SKPath CreateBoxPath(float startLeft, float startTop, float scaledBoxWidth, float scaledBoxHeight)
+        private static SKPath CreateBoxPath(float startLeft, float startTop, float scaledBoxWidth, float scaledBoxHeight)
         {
             var path = new SKPath();
             path.MoveTo(startLeft, startTop);
@@ -290,7 +260,8 @@ namespace XF.Azure.CS.FaceAPI.View
 
             return path;
         }
-        static void DrawBox(SKCanvas canvas, float startLeft, float startTop, float scaledBoxWidth, float scaledBoxHeight)
+
+        private static void DrawBox(SKCanvas canvas, float startLeft, float startTop, float scaledBoxWidth, float scaledBoxHeight)
         {
             var strokePaint = new SKPaint
             {
@@ -314,7 +285,7 @@ namespace XF.Azure.CS.FaceAPI.View
             DrawBox(canvas, blurStrokePaint, startLeft, startTop, scaledBoxWidth, scaledBoxHeight);
         }
 
-        static void ClearCanvas(SKImageInfo info, SKCanvas canvas)
+        private static void ClearCanvas(SKImageInfo info, SKCanvas canvas)
         {
             var paint = new SKPaint
             {

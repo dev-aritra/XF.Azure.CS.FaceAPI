@@ -19,6 +19,7 @@ namespace XF.Azure.CS.FaceAPI.View
 
         private async void CaptureImage(object sender, EventArgs e)
         {
+            
             await Navigation.PushAsync(new CaptureImagePage());
         }
 
