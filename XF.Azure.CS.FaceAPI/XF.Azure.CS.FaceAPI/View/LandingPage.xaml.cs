@@ -23,9 +23,6 @@ namespace XF.Azure.CS.FaceAPI.View
             await Navigation.PushAsync(new CaptureImagePage());
         }
 
-        private async void SelectFromGallery(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new SelectFromGalleryPage());
-        }
+        
     }
 }
