@@ -6,18 +6,16 @@
     Title="Home">
     <ContentPage.Content>
         <StackLayout VerticalOptions="Center">
-            <Button
-                Margin="10,10,10,10"
-                BackgroundColor="Aquamarine"
-                Clicked="CaptureImage"
-                Text="Capture image"
-                TextColor="Black" />
-            <Button
-                Margin="10,10,10,10"
-                BackgroundColor="Aquamarine"
-                Clicked="SelectFromGallery"
-                Text="Select from gallery"
-                TextColor="Black" />
+            <Image
+                HorizontalOptions="Center"
+                Source="xamlogo"
+                VerticalOptions="Center">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="CaptureImage" />
+                </Image.GestureRecognizers>
+            </Image>
+
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
