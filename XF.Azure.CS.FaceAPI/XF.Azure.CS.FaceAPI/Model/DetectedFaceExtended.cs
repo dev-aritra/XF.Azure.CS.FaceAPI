@@ -1,9 +1,6 @@
 ﻿using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace XF.Azure.CS.FaceAPI
+namespace XF.Azure.CS.FaceAPI.Model
 {
     public class DetectedFaceExtended : DetectedFace
     {

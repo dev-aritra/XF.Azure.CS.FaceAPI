@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XF.Azure.CS.FaceAPI.iOS", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XF.Azure.CS.FaceAPI.UWP", "XF.Azure.CS.FaceAPI\XF.Azure.CS.FaceAPI.UWP\XF.Azure.CS.FaceAPI.UWP.csproj", "{C3B41717-1488-4021-BF0A-DA8FDED728CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XF.Azure.CS.FaceAPI", "XF.Azure.CS.FaceAPI\XF.Azure.CS.FaceAPI\XF.Azure.CS.FaceAPI.csproj", "{31B41CEB-4FA0-472D-BD4E-ABB692284482}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XF.Azure.CS.FaceAPI", "XF.Azure.CS.FaceAPI\XF.Azure.CS.FaceAPI\XF.Azure.CS.FaceAPI.csproj", "{31B41CEB-4FA0-472D-BD4E-ABB692284482}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

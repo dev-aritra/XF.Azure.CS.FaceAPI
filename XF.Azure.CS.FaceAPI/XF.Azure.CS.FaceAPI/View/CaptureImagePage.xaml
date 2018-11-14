@@ -8,11 +8,10 @@
     <NavigationPage.TitleView>
 
         <Button
+            BackgroundColor="Transparent"
             Clicked="OnClickTapped"
             HorizontalOptions="Center"
             Text="Click" />
-
-
     </NavigationPage.TitleView>
     <ContentPage.Content>
 

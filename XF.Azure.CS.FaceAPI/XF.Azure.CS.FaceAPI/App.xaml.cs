@@ -1,9 +1,9 @@
-﻿using System;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using XF.Azure.CS.FaceAPI.View;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
+
 namespace XF.Azure.CS.FaceAPI
 {
     public partial class App : Application
@@ -12,12 +12,12 @@ namespace XF.Azure.CS.FaceAPI
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage( new LandingPage());
+            MainPage = new NavigationPage(new LandingPage());
         }
 
-        protected override void OnStart()
+        protected override void OnResume()
         {
-            // Handle when your app starts
+            // Handle when your app resumes
         }
 
         protected override void OnSleep()
@@ -25,9 +25,9 @@ namespace XF.Azure.CS.FaceAPI
             // Handle when your app sleeps
         }
 
-        protected override void OnResume()
+        protected override void OnStart()
         {
-            // Handle when your app resumes
+            // Handle when your app starts
         }
     }
 }
