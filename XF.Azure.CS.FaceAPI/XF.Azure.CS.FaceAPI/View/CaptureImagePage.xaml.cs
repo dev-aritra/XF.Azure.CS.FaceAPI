@@ -123,6 +123,10 @@ namespace XF.Azure.CS.FaceAPI.View
                         detectedFaces.Value.AddRange(foundFaces);
                         capturedImage.InvalidateSurface();
                     }
+                    else
+                    {
+                        UserDialogs.Instance.Toast("Could not detect any face");
+                    }
 
                     HideProgressDialog();
                 }
