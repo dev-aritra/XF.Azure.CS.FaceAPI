@@ -8,7 +8,7 @@
         <StackLayout VerticalOptions="Center">
             <Image
                 HorizontalOptions="Center"
-                Source="xamlogo"
+                Source="xamlogo.png"
                 VerticalOptions="Center">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Tapped="CaptureImage" />
