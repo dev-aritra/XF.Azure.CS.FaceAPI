@@ -22,7 +22,7 @@ namespace XF.Azure.CS.FaceAPI.Services
         public async Task<List<DetectedFaceExtended>> GetFaces(MediaFile image)
         {
             List<DetectedFaceExtended> detectedFaces = null;
-            var faceApiResponseList = await faceClient.Face.DetectWithStreamAsync(image.GetStream(), returnFaceAttributes: new List<FaceAttributeType> { { FaceAttributeType.Emotion } });
+            var faceApiResponseList = await faceClient.Face.DetectWithStreamAsync(image.GetStream(), returnFaceAttributes: new List<FaceAttributeType> { { FaceAttributeType.Emotion }});
             DetectedFaceExtended decFace = null;
             if (faceApiResponseList.Count > 0)
             {
@@ -33,6 +33,7 @@ namespace XF.Azure.CS.FaceAPI.Services
                     {
                         FaceRectangle = face.FaceRectangle,
                     };
+                    
                     decFace.PredominantEmotion = FindDetectedEmotion(face.FaceAttributes.Emotion);
                     detectedFaces.Add(decFace);
                 }

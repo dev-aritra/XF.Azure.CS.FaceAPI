@@ -14,7 +14,7 @@ using Android.Widget;
 
 namespace XF.Azure.CS.FaceAPI.Droid
 {
-    [Activity(Label = "Face API", Theme = "@style/SplashTheme", MainLauncher = true , Icon = "@mipmap/icon", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "Face sentiment", Theme = "@style/SplashTheme", MainLauncher = true , Icon = "@mipmap/icon", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class SplashActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)

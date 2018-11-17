@@ -20,6 +20,7 @@ namespace XF.Azure.CS.FaceAPI.View
         private FaceAPIService faceAPIService;
         private SKBitmap Image;
         private SkiaSharpDrawingService skiaDrawingService;
+        private bool drawemoji = true;
 
         public CaptureImagePage()
         {
@@ -48,7 +49,8 @@ namespace XF.Azure.CS.FaceAPI.View
                 {
                     foreach (var face in detectedFaces.Value)
                     {
-                        skiaDrawingService.LabelPrediction(canvas, face.FaceRectangle, left, top, scale, face.PredominantEmotion);
+                        skiaDrawingService.DrawPrediction(canvas, face.FaceRectangle, left, top, scale, face.PredominantEmotion, drawemoji);
+                        //skiaDrawingService.DrawEmotiocon(info, canvas, face.PredominantEmotion);
                     }
                 }
             }
@@ -107,6 +109,10 @@ namespace XF.Azure.CS.FaceAPI.View
         private async void TakePictureAndAnalizeImage()
         {
             var capturedImg = await TakePicture();
+            if (detectedFaces.Value.Count > 0)
+            {
+                detectedFaces.Value.Clear();
+            }
             if (capturedImg != null)
             {
                 ShowProgressDialog();
@@ -116,10 +122,7 @@ namespace XF.Azure.CS.FaceAPI.View
                     var foundFaces = await faceAPIService.GetFaces(capturedImg);
                     if (foundFaces != null && foundFaces.Count > 0)
                     {
-                        if (detectedFaces.Value.Count > 0)
-                        {
-                            detectedFaces.Value.Clear();
-                        }
+                        
                         detectedFaces.Value.AddRange(foundFaces);
                         capturedImage.InvalidateSurface();
                     }
@@ -136,6 +139,24 @@ namespace XF.Azure.CS.FaceAPI.View
                     UserDialogs.Instance.Toast("Could not detect any face");
                 }
             }
+        }
+
+        private void Switch_Toggled(object sender, ToggledEventArgs e)
+        {
+            var mode= sender as Switch;
+            if(mode.IsToggled)
+            {
+                drawemoji = true;
+                displayMode.Text = "Emoji mode";
+
+
+            }
+            else
+            {
+                drawemoji = false;
+                displayMode.Text = "Label mode";
+            }
+
         }
     }
 }

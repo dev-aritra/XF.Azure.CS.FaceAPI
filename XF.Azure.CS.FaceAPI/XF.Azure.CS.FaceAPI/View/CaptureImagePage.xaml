@@ -6,15 +6,25 @@
     xmlns:forms="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
     Title="Capture Image">
     <NavigationPage.TitleView>
-
-        <Button
-            BackgroundColor="Transparent"
-            Clicked="OnClickTapped"
-            HorizontalOptions="Center"
-            Text="Click" />
+        <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+            <Button
+                BackgroundColor="Transparent"
+                Clicked="OnClickTapped"
+                HorizontalOptions="Start"
+                Text="Click" />
+            <Label
+                x:Name="displayMode"
+                HorizontalOptions="End"
+                Text="Emoji mode"
+                VerticalOptions="Center" />
+            <Switch
+                HorizontalOptions="End"
+                IsToggled="True"
+                Toggled="Switch_Toggled"
+                VerticalOptions="Center" />
+        </StackLayout>
     </NavigationPage.TitleView>
     <ContentPage.Content>
-
         <forms:SKCanvasView x:Name="capturedImage" PaintSurface="CapturedImage_PaintSurface" />
     </ContentPage.Content>
 </ContentPage>
