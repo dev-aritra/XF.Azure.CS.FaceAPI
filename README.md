@@ -1,7 +1,11 @@
 # Emojifier
 Simple Xamarin Forms application to detect faces, and to detect emotions using Microsoft Azure Face API on Android, iOS and UWP
 
-[![Build status](https://build.appcenter.ms/v0.1/apps/35071968-1887-416a-b2af-c90cd53d25f0/branches/master/badge)](https://appcenter.ms)
+Android build | iOS build |
+--- | --- |
+[![Build status](https://build.appcenter.ms/v0.1/apps/35071968-1887-416a-b2af-c90cd53d25f0/branches/master/badge)](https://appcenter.ms) | [![Build status](https://build.appcenter.ms/v0.1/apps/0ddf8509-b0fd-4dd6-aa49-a47e74bd0350/branches/master/badge)](https://appcenter.ms) |
+
+
 
 ![Screenshot](https://github.com/dev-aritra/XF.Azure.CS.FaceAPI/blob/master/images/emoji.gif)  ![Screenshot](https://github.com/dev-aritra/XF.Azure.CS.FaceAPI/blob/master/images/faceapi.gif)
 
