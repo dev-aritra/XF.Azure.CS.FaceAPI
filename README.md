@@ -5,6 +5,10 @@ Simple Xamarin Forms application to detect faces, and to detect emotions using M
 
 ![Screenshot](https://github.com/dev-aritra/XF.Azure.CS.FaceAPI/blob/master/images/emoji.gif)  ![Screenshot](https://github.com/dev-aritra/XF.Azure.CS.FaceAPI/blob/master/images/faceapi.gif)
 
+## How to build
+Read the compleget guide here
+https://gameofthreads.online/
+
 ## Features
 1. Detects faces
 2. Detects emotion on those faces
