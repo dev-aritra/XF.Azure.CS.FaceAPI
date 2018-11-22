@@ -10,7 +10,7 @@ namespace XF.Azure.CS.FaceAPI.Services
 {
     public class FaceAPIService
     {
-        private string APIKEY = "50c78f754e734425adca685ee646701b";
+        private string APIKEY = "your api key";
         private string ENDPPOINT = "https://centralindia.api.cognitive.microsoft.com/";
         private FaceClient faceClient;
 
