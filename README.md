@@ -9,6 +9,7 @@ Android build | iOS build |
 <br />
 <br />
 
+
 ![Screenshot](https://github.com/dev-aritra/XF.Azure.CS.FaceAPI/blob/master/images/emoji.gif)  ![Screenshot](https://github.com/dev-aritra/XF.Azure.CS.FaceAPI/blob/master/images/faceapi.gif)
 
 ## How to build
