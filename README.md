@@ -32,7 +32,3 @@ https://gameofthreads.online/
 * **Aritra Das** - *Blog* - [GameOfThreads](https://gameofthreads.online/)
 
 
-Android build | iOS build |
---- | --- |
-[![Build status](https://build.appcenter.ms/v0.1/apps/35071968-1887-416a-b2af-c90cd53d25f0/branches/master/badge)](https://appcenter.ms) | [![Build status](https://build.appcenter.ms/v0.1/apps/0ddf8509-b0fd-4dd6-aa49-a47e74bd0350/branches/master/badge)](https://appcenter.ms) |
-
