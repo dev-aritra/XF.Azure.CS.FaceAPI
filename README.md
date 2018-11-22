@@ -12,9 +12,9 @@ Android build | iOS build |
 
 ![Screenshot](https://github.com/dev-aritra/XF.Azure.CS.FaceAPI/blob/master/images/emoji.gif)  ![Screenshot](https://github.com/dev-aritra/XF.Azure.CS.FaceAPI/blob/master/images/faceapi.gif)
 
-## How to build
+## How to develop
 Read the compleget guide here
-https://gameofthreads.online/
+https://gameofthreads.online/face-detection-sentiment-analysis-azure-xamarin/
 
 ## Features
 1. Detects faces
